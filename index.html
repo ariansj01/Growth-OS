@@ -3,27 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Growth OS — سیستم عامل رشد کسب‌وکار شما</title>
+<title>Growth OS — مشتری‌هایت را برگردان</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #0B0D12;
-    --bg2:       #111420;
-    --bg3:       #181C28;
-    --teal:      #00C8A0;
-    --teal-dim:  #00C8A022;
-    --purple:    #7C5CFC;
-    --purple-dim:#7C5CFC22;
+    --bg:        #080A0F;
+    --bg2:       #0E1118;
+    --bg3:       #151921;
+    --teal:      #00D4A8;
+    --teal-dim:  #00D4A815;
+    --teal-glow: #00D4A840;
+    --purple:    #8B5CF6;
+    --purple-dim:#8B5CF615;
+    --red:       #FF4D6D;
+    --red-dim:   #FF4D6D15;
     --gold:      #F5C842;
-    --text:      #E8EAF0;
-    --muted:     #8A90A8;
-    --border:    #1E2236;
-    --card:      #13161F;
-    --r:         14px;
+    --text:      #EDF0F7;
+    --muted:     #7A809A;
+    --border:    #1A1F2E;
+    --card:      #0F1219;
+    --r:         16px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -34,53 +36,47 @@
     overflow-x: hidden;
   }
 
-  /* ─── ANIMATED BACKGROUND CANVAS ─── */
+  /* NOISE */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+
   #bg-canvas {
     position: fixed; inset: 0;
     width: 100%; height: 100%;
     pointer-events: none; z-index: 0;
   }
 
-  /* ─── NOISE TEXTURE ─── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0;
-  }
-
-  /* ─── NAV ─── */
+  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
     z-index: 100;
     padding: 0 5vw;
-    height: 68px;
+    height: 70px;
     display: flex; align-items: center; justify-content: space-between;
-    background: rgba(11,13,18,0.7);
-    backdrop-filter: blur(18px);
+    background: rgba(8,10,15,0.75);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
 
   .nav-logo {
     display: flex; align-items: center; gap: 10px;
-    font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;
-    color: var(--text); text-decoration: none;
+    font-weight: 900; font-size: 1.1rem;
+    color: var(--text); text-decoration: none; letter-spacing: -0.02em;
   }
 
-  .nav-logo-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--teal);
-    box-shadow: 0 0 12px var(--teal);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.85); }
+  .logo-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--teal), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
   }
 
   .nav-links {
-    display: flex; gap: 32px; list-style: none;
+    display: flex; gap: 36px; list-style: none;
   }
 
   .nav-links a {
@@ -90,348 +86,510 @@
   .nav-links a:hover { color: var(--text); }
 
   .nav-cta {
-    background: var(--teal); color: #0B0D12;
-    border: none; border-radius: 8px;
+    background: var(--teal); color: #080A0F;
+    border: none; border-radius: 9px;
     padding: 10px 22px; font-size: 0.875rem;
-    font-weight: 700; font-family: inherit;
-    cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+    font-weight: 800; font-family: inherit;
+    cursor: pointer; transition: all 0.2s;
+    letter-spacing: -0.01em;
   }
-  .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px var(--teal-glow); }
 
-  /* ─── HERO ─── */
+  /* HERO */
   .hero {
     min-height: 100vh;
-    padding: 120px 5vw 80px;
+    padding: 130px 5vw 90px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 70px;
     align-items: center;
-    position: relative;
+    position: relative; z-index: 1;
   }
 
-  .hero-glow {
+  .hero-glow-left {
     position: absolute;
-    width: 600px; height: 600px;
+    width: 700px; height: 700px;
     border-radius: 50%;
-    background: radial-gradient(circle, #7C5CFC18 0%, transparent 70%);
-    top: 50%; left: 55%;
-    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #8B5CF610 0%, transparent 65%);
+    top: 50%; right: 40%;
+    transform: translate(50%, -50%);
     pointer-events: none;
   }
 
-  .hero-eyebrow {
+  .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--teal-dim); border: 1px solid #00C8A044;
-    border-radius: 100px; padding: 6px 14px;
-    font-size: 0.78rem; color: var(--teal); font-weight: 600;
-    margin-bottom: 24px;
+    background: var(--teal-dim);
+    border: 1px solid #00D4A825;
+    border-radius: 100px; padding: 7px 16px;
+    font-size: 0.75rem; color: var(--teal); font-weight: 700;
+    margin-bottom: 28px; letter-spacing: 0.02em;
   }
 
-  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .eyebrow-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--teal);
+    animation: blink 2.2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
 
   .hero h1 {
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-size: clamp(2.4rem, 4.2vw, 3.6rem);
     font-weight: 900;
-    line-height: 1.25;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
+    line-height: 1.22;
+    letter-spacing: -0.035em;
+    margin-bottom: 12px;
   }
 
-  .hero h1 em {
-    font-style: normal;
-    background: linear-gradient(135deg, var(--teal), var(--purple));
+  .hero h1 .accent {
+    background: linear-gradient(130deg, var(--teal) 0%, var(--purple) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .hero-sub {
-    color: var(--muted); font-size: 1.05rem;
-    max-width: 480px; margin-bottom: 40px;
-    font-weight: 400;
+  .hero-sub-bold {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+    opacity: 0.85;
   }
 
-  .hero-actions { display: flex; gap: 14px; align-items: center; }
+  .hero-sub {
+    color: var(--muted); font-size: 1rem;
+    max-width: 460px; margin-bottom: 40px;
+    font-weight: 400; line-height: 1.8;
+  }
+
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 
   .btn-primary {
-    background: var(--teal); color: #0B0D12;
-    border: none; border-radius: 10px;
-    padding: 14px 28px; font-size: 0.95rem;
-    font-weight: 700; font-family: inherit;
-    cursor: pointer; transition: all 0.2s;
+    background: var(--teal); color: #080A0F;
+    border: none; border-radius: 11px;
+    padding: 15px 30px; font-size: 0.95rem;
+    font-weight: 800; font-family: inherit;
+    cursor: pointer; transition: all 0.22s;
     display: flex; align-items: center; gap: 8px;
+    letter-spacing: -0.01em;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px #00C8A044; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px var(--teal-glow); }
 
   .btn-ghost {
     background: transparent; color: var(--text);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 14px 24px; font-size: 0.95rem;
+    border: 1px solid var(--border); border-radius: 11px;
+    padding: 15px 24px; font-size: 0.95rem;
     font-weight: 500; font-family: inherit;
     cursor: pointer; transition: all 0.2s;
   }
   .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
 
-  .hero-stats {
-    display: flex; gap: 32px; margin-top: 48px;
-    padding-top: 32px; border-top: 1px solid var(--border);
+  .trust-line {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; color: var(--muted); font-size: 0.8rem;
   }
 
-  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .trust-line span { color: var(--teal); font-weight: 700; }
+
+  .hero-stats {
+    display: flex; gap: 28px; margin-top: 44px;
+    padding-top: 28px; border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat-item { display: flex; flex-direction: column; gap: 5px; }
 
   .stat-num {
-    font-size: 1.6rem; font-weight: 800;
-    letter-spacing: -0.04em; color: var(--text);
+    font-size: 1.7rem; font-weight: 900;
+    letter-spacing: -0.05em; color: var(--text);
+    line-height: 1;
   }
 
-  .stat-num span { color: var(--teal); }
+  .stat-num .hi { color: var(--teal); }
+  .stat-label { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
 
-  .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
-
-  /* ─── LIVE DASHBOARD (Hero Right) ─── */
+  /* DASHBOARD */
   .dashboard-preview {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-    position: relative;
-    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px #ffffff08;
+    position: relative; z-index: 2;
+    animation: floatY 7s ease-in-out infinite;
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
 
   .db-titlebar {
     background: var(--bg3);
-    padding: 14px 18px;
+    padding: 13px 18px;
     display: flex; align-items: center; gap: 8px;
     border-bottom: 1px solid var(--border);
   }
 
   .db-dots { display: flex; gap: 6px; }
+  .db-dot { width: 10px; height: 10px; border-radius: 50%; }
 
-  .db-dot {
-    width: 10px; height: 10px; border-radius: 50%;
+  .db-title-text {
+    font-size: 0.7rem; color: var(--muted);
+    margin-right: 10px; font-weight: 500;
   }
 
   .db-body { padding: 18px; }
 
   .db-section-title {
-    font-size: 0.7rem; font-weight: 700; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 0.68rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
     margin-bottom: 12px;
   }
 
-  .customer-list { display: flex; flex-direction: column; gap: 8px; }
+  .customer-list { display: flex; flex-direction: column; gap: 7px; }
 
   .customer-row {
     display: flex; align-items: center; justify-content: space-between;
     background: var(--bg2); border-radius: 10px;
     padding: 10px 14px; gap: 12px;
-    transition: background 0.3s;
+    transition: background 0.25s, transform 0.2s;
   }
-
-  .customer-row:hover { background: var(--bg3); }
+  .customer-row:hover { background: var(--bg3); transform: translateX(-2px); }
 
   .cust-avatar {
     width: 32px; height: 32px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+    font-size: 0.68rem; font-weight: 800; flex-shrink: 0;
   }
 
   .cust-info { flex: 1; min-width: 0; }
-
   .cust-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
-
   .cust-detail { font-size: 0.7rem; color: var(--muted); }
 
   .badge {
-    font-size: 0.65rem; font-weight: 700;
-    padding: 3px 8px; border-radius: 100px;
-    white-space: nowrap; flex-shrink: 0;
+    font-size: 0.63rem; font-weight: 700;
+    padding: 3px 9px; border-radius: 100px;
+    white-space: nowrap; flex-shrink: 0; letter-spacing: 0.02em;
+  }
+  .badge-vip    { background: #F5C84220; color: var(--gold); border: 1px solid #F5C84230; }
+  .badge-loyal  { background: #00D4A818; color: var(--teal); border: 1px solid #00D4A828; }
+  .badge-at-risk{ background: #FF4D6D18; color: var(--red); border: 1px solid #FF4D6D28; }
+  .badge-new    { background: #8B5CF618; color: var(--purple); border: 1px solid #8B5CF628; }
+
+  /* ACTION CARD */
+  .action-card {
+    background: linear-gradient(135deg, #00D4A80A, #8B5CF60A);
+    border: 1px solid #00D4A820;
+    border-radius: 12px; padding: 14px;
+    margin-top: 12px;
+    display: flex; align-items: flex-start; gap: 12px;
   }
 
-  .badge-vip    { background: #F5C84222; color: var(--gold); border: 1px solid #F5C84233; }
-  .badge-loyal  { background: #00C8A022; color: var(--teal); border: 1px solid #00C8A033; }
-  .badge-at-risk{ background: #FC5C5C22; color: #FC5C5C;    border: 1px solid #FC5C5C33; }
-  .badge-new    { background: #7C5CFC22; color: var(--purple);border: 1px solid #7C5CFC33; }
+  .action-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: var(--teal-dim); border: 1px solid #00D4A830;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+
+  .action-text { flex: 1; }
+  .action-label { font-size: 0.65rem; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .action-msg { font-size: 0.78rem; color: var(--text); font-weight: 500; line-height: 1.5; }
 
   .db-metrics {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    margin-top: 14px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-top: 12px;
   }
 
   .metric-card {
-    background: var(--bg2); border-radius: 10px; padding: 12px 14px;
+    background: var(--bg2); border-radius: 10px; padding: 12px 13px;
     border: 1px solid var(--border);
   }
-
-  .metric-label { font-size: 0.67rem; color: var(--muted); font-weight: 500; margin-bottom: 4px; }
-
-  .metric-value { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.04em; }
-
-  .metric-change { font-size: 0.67rem; font-weight: 600; margin-top: 2px; }
-
+  .metric-label { font-size: 0.65rem; color: var(--muted); font-weight: 500; margin-bottom: 4px; }
+  .metric-value { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.05em; }
+  .metric-change { font-size: 0.65rem; font-weight: 600; margin-top: 2px; }
   .up   { color: var(--teal); }
-  .down { color: #FC5C5C; }
+  .down { color: var(--red); }
 
-  /* ─── PROBLEM SECTION ─── */
-  .section { padding: 100px 5vw; position: relative; }
+  /* MARQUEE */
+  .marquee-section {
+    padding: 28px 0; overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    position: relative; z-index: 1;
+  }
 
-  .section-tag {
+  .marquee-track {
+    display: flex; gap: 48px; width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.8rem; font-weight: 600; color: var(--muted);
+    white-space: nowrap;
+  }
+  .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); opacity: 0.6; }
+
+  /* SECTIONS */
+  section { padding: 100px 5vw; position: relative; z-index: 1; }
+
+  .section-label {
     display: inline-flex; align-items: center; gap: 8px;
-    font-size: 0.75rem; font-weight: 700; color: var(--purple);
-    text-transform: uppercase; letter-spacing: 0.1em;
-    margin-bottom: 16px;
+    font-size: 0.73rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 18px;
+  }
+  .section-label::before {
+    content: ''; width: 18px; height: 2px;
+    background: currentColor; border-radius: 2px;
   }
 
-  .section-tag::before {
-    content: '';
-    width: 20px; height: 2px; background: var(--purple);
-  }
-
-  .section h2 {
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 900; letter-spacing: -0.03em;
+  .section-h2 {
+    font-size: clamp(1.9rem, 3vw, 2.8rem);
+    font-weight: 900; letter-spacing: -0.035em;
     line-height: 1.2; margin-bottom: 16px;
   }
 
   .section-sub {
-    color: var(--muted); font-size: 1.05rem;
-    max-width: 540px; margin-bottom: 56px;
+    color: var(--muted); font-size: 1rem;
+    max-width: 520px; margin-bottom: 56px;
+    line-height: 1.8;
   }
 
-  /* Pain Points */
+  /* PROBLEM SECTION */
+  #problem { background: var(--bg); }
+
+  .problem-intro {
+    max-width: 640px; margin-bottom: 56px;
+  }
+
+  .problem-big {
+    font-size: clamp(1.9rem, 3vw, 2.8rem);
+    font-weight: 900; letter-spacing: -0.035em;
+    line-height: 1.25; margin-bottom: 20px;
+  }
+
+  .problem-big .red { color: var(--red); }
+
+  .problem-intro p {
+    color: var(--muted); font-size: 1.05rem; line-height: 1.85;
+  }
+
   .pain-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
 
   .pain-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px 26px;
     transition: border-color 0.25s, transform 0.25s;
+    position: relative; overflow: hidden;
   }
 
-  .pain-card:hover { border-color: #FC5C5C44; transform: translateY(-3px); }
+  .pain-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at top right, #FF4D6D10, transparent 70%);
+  }
 
-  .pain-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: #FC5C5C18; display: flex; align-items: center;
-    justify-content: center; font-size: 1.3rem; margin-bottom: 16px;
+  .pain-card:hover { border-color: #FF4D6D30; transform: translateY(-3px); }
+
+  .pain-num {
+    font-size: 0.7rem; font-weight: 800; color: var(--red);
+    opacity: 0.6; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 14px;
   }
 
   .pain-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 
-  .pain-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+  .pain-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
 
-  /* ─── HOW IT WORKS ─── */
-  .steps-wrap { max-width: 760px; margin: 0 auto; }
+  /* HOW IT WORKS */
+  #how { background: var(--bg2); }
+
+  .steps-container {
+    max-width: 800px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 0;
+  }
 
   .step {
-    display: flex; gap: 28px; align-items: flex-start;
-    padding: 28px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 32px; align-items: flex-start;
+    padding: 32px 0; border-bottom: 1px solid var(--border);
     transition: all 0.2s;
   }
   .step:last-child { border-bottom: none; }
-  .step:hover .step-num { background: var(--teal); color: #0B0D12; }
+  .step:hover .step-circle { background: var(--teal); color: #080A0F; border-color: var(--teal); }
 
-  .step-num {
-    width: 44px; height: 44px; border-radius: 10px;
-    border: 1px solid var(--border); flex-shrink: 0;
+  .step-circle {
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1.5px solid var(--border); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem; font-weight: 800; color: var(--muted);
-    transition: all 0.25s;
+    font-size: 0.9rem; font-weight: 900; color: var(--muted);
+    transition: all 0.25s; background: var(--bg3);
   }
 
-  .step-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+  .step-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+  .step-content p { color: var(--muted); font-size: 0.88rem; line-height: 1.8; }
 
-  .step-content p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+  .step-result {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 12px; padding: 6px 12px;
+    background: var(--teal-dim); border: 1px solid #00D4A825;
+    border-radius: 100px; font-size: 0.75rem;
+    color: var(--teal); font-weight: 700;
+  }
 
-  /* ─── FEATURES ─── */
-  .features-grid {
+  /* BENEFITS (replaced features) */
+  #benefits { background: var(--bg); }
+
+  .benefits-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 2px; border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+    gap: 2px; border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border);
   }
 
-  .feat-card {
+  .benefit-card {
     background: var(--card); padding: 36px;
     border-right: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     transition: background 0.25s;
+    position: relative; overflow: hidden;
   }
-  .feat-card:hover { background: var(--bg3); }
-  .feat-card:nth-child(2n) { border-right: none; }
-  .feat-card:nth-child(3), .feat-card:nth-child(4) { border-bottom: none; }
+  .benefit-card:hover { background: var(--bg3); }
+  .benefit-card:nth-child(2n) { border-right: none; }
+  .benefit-card:nth-child(3), .benefit-card:nth-child(4) { border-bottom: none; }
 
-  .feat-icon {
-    width: 48px; height: 48px; border-radius: 12px;
+  .benefit-icon {
+    width: 50px; height: 50px; border-radius: 13px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-bottom: 20px;
+    font-size: 1.5rem; margin-bottom: 22px;
   }
 
-  .feat-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+  .benefit-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
 
-  .feat-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+  .benefit-card .result {
+    font-size: 1rem; font-weight: 700; color: var(--teal);
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
 
-  /* ─── PRICING ─── */
+  .benefit-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.75; }
+
+  /* SOCIAL PROOF */
+  #proof { background: var(--bg2); }
+
+  .proof-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .proof-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .proof-card:hover { transform: translateY(-3px); border-color: #00D4A825; }
+
+  .proof-stars {
+    display: flex; gap: 3px; margin-bottom: 16px;
+  }
+  .proof-stars span { color: var(--gold); font-size: 0.9rem; }
+
+  .proof-text {
+    font-size: 0.9rem; line-height: 1.75; color: var(--text);
+    margin-bottom: 20px; font-style: italic;
+    opacity: 0.9;
+  }
+
+  .proof-text::before { content: '«'; margin-left: 2px; color: var(--teal); }
+  .proof-text::after  { content: '»'; margin-right: 2px; color: var(--teal); }
+
+  .proof-author {
+    display: flex; align-items: center; gap: 12px;
+    padding-top: 18px; border-top: 1px solid var(--border);
+  }
+
+  .proof-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800; flex-shrink: 0;
+  }
+
+  .proof-name { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+  .proof-role { font-size: 0.72rem; color: var(--muted); }
+
+  /* PRICING */
+  #pricing { background: var(--bg); }
+
   .pricing-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 20px; margin-top: 56px;
+    gap: 20px;
   }
 
   .price-card {
     background: var(--card); border: 1px solid var(--border);
     border-radius: 20px; padding: 36px;
-    position: relative; transition: transform 0.25s, border-color 0.25s;
+    position: relative; transition: transform 0.25s;
   }
-  .price-card:hover { transform: translateY(-4px); }
+  .price-card:hover { transform: translateY(-5px); }
 
   .price-card.featured {
     border-color: var(--teal);
-    background: linear-gradient(160deg, #00C8A00A, var(--card));
+    background: linear-gradient(160deg, #00D4A80C, var(--card));
   }
 
   .price-badge {
-    position: absolute; top: -13px; right: 24px;
-    background: var(--teal); color: #0B0D12;
-    font-size: 0.7rem; font-weight: 800;
-    padding: 5px 12px; border-radius: 100px;
+    position: absolute; top: -14px; right: 24px;
+    background: var(--teal); color: #080A0F;
+    font-size: 0.68rem; font-weight: 900;
+    padding: 5px 14px; border-radius: 100px;
+    letter-spacing: 0.02em;
   }
 
-  .price-plan { font-size: 0.75rem; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .price-plan { font-size: 0.7rem; font-weight: 700; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
 
   .price-amount {
-    font-size: 2rem; font-weight: 900; letter-spacing: -0.04em;
-    margin-bottom: 4px;
+    font-size: 2.2rem; font-weight: 900; letter-spacing: -0.05em;
+    margin-bottom: 5px; line-height: 1;
   }
-  .price-amount span { font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+  .price-amount sub { font-size: 0.9rem; font-weight: 500; color: var(--muted); vertical-align: middle; }
 
-  .price-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .price-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 26px; padding-bottom: 22px; border-bottom: 1px solid var(--border); line-height: 1.6; }
 
-  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
 
   .price-features li {
     font-size: 0.85rem; display: flex; align-items: center; gap: 10px;
+    color: var(--text);
   }
 
   .price-features li::before {
     content: '✓';
     width: 18px; height: 18px; border-radius: 50%;
     background: var(--teal-dim); color: var(--teal);
-    font-size: 0.65rem; font-weight: 800;
+    font-size: 0.62rem; font-weight: 900;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
 
   .price-btn {
-    width: 100%; padding: 13px;
+    width: 100%; padding: 14px;
     border-radius: 10px; font-family: inherit;
-    font-size: 0.9rem; font-weight: 700;
+    font-size: 0.9rem; font-weight: 800;
     cursor: pointer; transition: all 0.2s;
+    letter-spacing: -0.01em;
   }
 
   .price-btn-outline {
@@ -441,123 +599,87 @@
   .price-btn-outline:hover { border-color: var(--teal); color: var(--teal); }
 
   .price-btn-solid {
-    background: var(--teal); color: #0B0D12;
-    border: none;
+    background: var(--teal); color: #080A0F; border: none;
   }
-  .price-btn-solid:hover { box-shadow: 0 8px 24px #00C8A044; transform: translateY(-1px); }
+  .price-btn-solid:hover { box-shadow: 0 10px 28px var(--teal-glow); transform: translateY(-1px); }
 
-  /* ─── CTA SECTION ─── */
+  /* CTA */
   .cta-section {
-    margin: 0 5vw 80px;
-    background: linear-gradient(135deg, var(--bg3), #1a1330);
+    margin: 0 5vw 90px;
+    background: linear-gradient(140deg, #0E1118, #16102A);
     border: 1px solid var(--border);
-    border-radius: 24px; padding: 80px;
-    text-align: center; position: relative; overflow: hidden;
+    border-radius: 28px; padding: 90px 60px;
+    text-align: center; position: relative; overflow: hidden; z-index: 1;
   }
 
-  .cta-section::before {
-    content: '';
-    position: absolute; width: 400px; height: 400px;
-    background: radial-gradient(circle, #7C5CFC18, transparent 70%);
+  .cta-glow {
+    position: absolute; width: 500px; height: 500px;
+    background: radial-gradient(circle, #8B5CF615, transparent 70%);
     top: 50%; left: 50%; transform: translate(-50%, -50%);
     pointer-events: none;
   }
 
   .cta-section h2 {
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
-    font-weight: 900; letter-spacing: -0.03em;
-    margin-bottom: 14px;
+    font-size: clamp(1.9rem, 3.2vw, 3rem);
+    font-weight: 900; letter-spacing: -0.035em;
+    margin-bottom: 14px; position: relative; z-index: 1;
   }
 
-  .cta-section p { color: var(--muted); font-size: 1rem; margin-bottom: 36px; }
+  .cta-section p {
+    color: var(--muted); font-size: 1.05rem;
+    margin-bottom: 36px; max-width: 500px;
+    margin-left: auto; margin-right: auto;
+    position: relative; z-index: 1; line-height: 1.75;
+  }
 
-  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-btns {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
 
-  /* ─── FOOTER ─── */
+  .cta-note {
+    margin-top: 18px; font-size: 0.78rem;
+    color: var(--muted); position: relative; z-index: 1;
+  }
+
+  /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
-    padding: 40px 5vw;
+    padding: 36px 5vw;
     display: flex; align-items: center; justify-content: space-between;
-    color: var(--muted); font-size: 0.82rem;
+    color: var(--muted); font-size: 0.8rem;
+    position: relative; z-index: 1;
   }
 
-  /* ─── PROGRESS BAR ─── */
-  .progress-wrap { margin-top: 14px; }
-
-  .progress-bar-row {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 8px;
-  }
-
-  .progress-label { font-size: 0.67rem; color: var(--muted); min-width: 60px; text-align: right; }
-
-  .progress-track {
-    flex: 1; height: 5px; background: var(--bg3); border-radius: 100px; overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%; border-radius: 100px;
-    background: linear-gradient(90deg, var(--teal), var(--purple));
-    animation: growBar 2s ease-out both;
-  }
-
-  @keyframes growBar {
-    from { width: 0 !important; }
-    to { /* width set inline */ }
-  }
-
-  .progress-pct { font-size: 0.67rem; font-weight: 700; color: var(--teal); min-width: 30px; }
-
-  /* ─── MARQUEE ─── */
-  .marquee-section {
-    padding: 40px 0; overflow: hidden;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-  }
-
-  .marquee-track {
-    display: flex; gap: 48px; width: max-content;
-    animation: marquee 20s linear infinite;
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  .marquee-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 0.82rem; font-weight: 600; color: var(--muted);
-    white-space: nowrap;
-  }
-
-  .marquee-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 100px; }
-    .dashboard-preview { max-width: 480px; }
-    .features-grid { grid-template-columns: 1fr; }
-    .feat-card:nth-child(2n) { border-right: 1px solid var(--border); }
-    .feat-card:nth-child(3) { border-bottom: 1px solid var(--border); }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
-    .cta-section { padding: 50px 28px; }
-    .nav-links { display: none; }
-  }
-
-  /* Scroll animations */
+  /* ANIMATIONS */
   .reveal {
-    opacity: 0; transform: translateY(28px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* Separator */
-  .sep {
-    width: 48px; height: 3px;
-    background: linear-gradient(90deg, var(--teal), var(--purple));
-    border-radius: 2px; margin-bottom: 32px;
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; padding-top: 110px; gap: 50px; }
+    .dashboard-preview { max-width: 480px; }
+    .pain-grid { grid-template-columns: 1fr 1fr; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-card:nth-child(2n) { border-right: 1px solid var(--border); }
+    .benefit-card:nth-child(3) { border-bottom: 1px solid var(--border); }
+    .proof-grid { grid-template-columns: 1fr; max-width: 480px; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+    .cta-section { padding: 60px 28px; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .pain-grid { grid-template-columns: 1fr; }
+    section { padding: 70px 5vw; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dashboard-preview { animation: none; }
+    .reveal { transition: opacity 0.3s; }
   }
 </style>
 </head>
@@ -567,45 +689,58 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <div class="nav-logo-dot"></div>
+    <div class="logo-icon">⚡</div>
     Growth OS
   </a>
   <ul class="nav-links">
-    <li><a href="#problem">مشکل</a></li>
-    <li><a href="#how">چطور کار می‌کند</a></li>
-    <li><a href="#features">قابلیت‌ها</a></li>
+    <li><a href="#problem">مشکل چیه؟</a></li>
+    <li><a href="#how">چطور کار می‌کنه</a></li>
+    <li><a href="#benefits">نتایج</a></li>
     <li><a href="#pricing">قیمت</a></li>
   </ul>
-  <button class="nav-cta">شروع رایگان</button>
+  <button class="nav-cta" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">۱۴ روز رایگان →</button>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-glow"></div>
+  <div class="hero-glow-left"></div>
 
   <div>
-    <div class="hero-eyebrow"><span></span> هوش مصنوعی برای فروشگاه‌های ایرانی</div>
-    <h1>مشتری‌هایت را <em>وفادار</em> کن، نه فقط جذب</h1>
+    <div class="eyebrow"><div class="eyebrow-dot"></div> برای آنلاین‌شاپ‌ها و کسب‌وکارهای اینستاگرامی</div>
+
+    <h1>مشتریت یک‌بار خرید کرد.<br><span class="accent">حالا برش گردون.</span></h1>
+
+    <p class="hero-sub-bold">بدون پیگیری روزانه، بدون فایل های Excel، بدون حدس و گمان.</p>
     <p class="hero-sub">
-      Growth OS داده مشتریانت را تحلیل می‌کند، آن‌ها را هوشمندانه دسته‌بندی می‌کند
-      و دقیقاً می‌گوید چه وقت، به چه کسی، چه پیامی بفرستی.
+      Growth OS به تو میگه کدوم مشتری داره میره کی باید پیام بدی،
+      و دقیقاً چی بنویسی — تا فروش دوم اتفاق بیفته.
     </p>
+
     <div class="hero-actions">
-      <button class="btn-primary">۱۴ روز رایگان امتحان کن →</button>
+      <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
+        رایگان شروع کن — ۱۴ روز
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
       <button class="btn-ghost">مشاهده دمو</button>
     </div>
+
+    <div class="trust-line">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D4A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>ایمن</span> · <span>هوشمند</span> · سریع
+    </div>
+
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-num"><span>+۱۵</span>٪</div>
-        <div class="stat-label">افزایش خرید مجدد</div>
+        <div class="stat-num"><span class="hi">+۲۳</span>٪</div>
+        <div class="stat-label">افزایش میانگین خرید مجدد</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num"><span>۳</span> دقیقه</div>
-        <div class="stat-label">تا اولین تحلیل</div>
+        <div class="stat-num"><span class="hi">۳</span> دقیقه</div>
+        <div class="stat-label">تا اولین تحلیل مشتریان</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num"><span>بدون</span></div>
-        <div class="stat-label">نیاز به CRM</div>
+        <div class="stat-num"><span class="hi">۰%</span></div>
+        <div class="stat-label">نیاز به دانش فنی</div>
       </div>
     </div>
   </div>
@@ -614,19 +749,28 @@
   <div class="dashboard-preview">
     <div class="db-titlebar">
       <div class="db-dots">
-        <div class="db-dot" style="background:#FC5C5C"></div>
+        <div class="db-dot" style="background:#FF4D6D"></div>
         <div class="db-dot" style="background:#F5C842"></div>
-        <div class="db-dot" style="background:#00C8A0"></div>
+        <div class="db-dot" style="background:#00D4A8"></div>
       </div>
-      <div style="font-size:0.72rem; color:var(--muted); margin-right:10px;">Growth OS — داشبورد مشتریان</div>
+      <div class="db-title-text">Growth OS · داشبورد مشتریان</div>
     </div>
 
     <div class="db-body">
-      <div class="db-section-title">وضعیت مشتریان</div>
+      <!-- ACTION ALERT -->
+      <div class="action-card">
+        <div class="action-icon">🔔</div>
+        <div class="action-text">
+          <div class="action-label">اقدام امروز</div>
+          <div class="action-msg">۷ مشتری در خطر ریزش هستند — متن پیام آماده است، فقط ارسال کن.</div>
+        </div>
+      </div>
+
+      <div class="db-section-title" style="margin-top:16px;">وضعیت مشتریان</div>
 
       <div class="customer-list">
         <div class="customer-row">
-          <div class="cust-avatar" style="background:#F5C84222; color:var(--gold);">س.م</div>
+          <div class="cust-avatar" style="background:#F5C84220; color:var(--gold);">س.م</div>
           <div class="cust-info">
             <div class="cust-name">سارا محمدی</div>
             <div class="cust-detail">آخرین خرید: ۳ روز پیش · ۸ خرید</div>
@@ -634,7 +778,7 @@
           <span class="badge badge-vip">VIP</span>
         </div>
         <div class="customer-row">
-          <div class="cust-avatar" style="background:#00C8A022; color:var(--teal);">ر.ک</div>
+          <div class="cust-avatar" style="background:#00D4A818; color:var(--teal);">ر.ک</div>
           <div class="cust-info">
             <div class="cust-name">رضا کریمی</div>
             <div class="cust-detail">آخرین خرید: ۱۲ روز پیش · ۴ خرید</div>
@@ -642,15 +786,15 @@
           <span class="badge badge-loyal">وفادار</span>
         </div>
         <div class="customer-row">
-          <div class="cust-avatar" style="background:#FC5C5C22; color:#FC5C5C;">ن.ا</div>
+          <div class="cust-avatar" style="background:#FF4D6D18; color:var(--red);">ن.ا</div>
           <div class="cust-info">
             <div class="cust-name">نیلوفر احمدی</div>
             <div class="cust-detail">آخرین خرید: ۵۵ روز پیش · ۲ خرید</div>
           </div>
-          <span class="badge badge-at-risk">در خطر</span>
+          <span class="badge badge-at-risk">در خطر ⚠️</span>
         </div>
         <div class="customer-row">
-          <div class="cust-avatar" style="background:#7C5CFC22; color:var(--purple);">م.ح</div>
+          <div class="cust-avatar" style="background:#8B5CF618; color:var(--purple);">م.ح</div>
           <div class="cust-info">
             <div class="cust-name">مهدی حسینی</div>
             <div class="cust-detail">اولین خرید: دیروز · ۱ خرید</div>
@@ -666,28 +810,9 @@
           <div class="metric-change up">↑ ۱۲٪ نسبت به ماه قبل</div>
         </div>
         <div class="metric-card">
-          <div class="metric-label">مشتریان در خطر</div>
-          <div class="metric-value down">۷</div>
-          <div class="metric-change" style="color:var(--muted);">نیاز به پیگیری امروز</div>
-        </div>
-      </div>
-
-      <div class="progress-wrap">
-        <div class="db-section-title" style="margin-top:14px;">پیشرفت کمپین بازگشت مشتری</div>
-        <div class="progress-bar-row">
-          <span class="progress-label">VIPها</span>
-          <div class="progress-track"><div class="progress-fill" style="width:82%"></div></div>
-          <span class="progress-pct">۸۲٪</span>
-        </div>
-        <div class="progress-bar-row">
-          <span class="progress-label">وفادارها</span>
-          <div class="progress-track"><div class="progress-fill" style="width:61%"></div></div>
-          <span class="progress-pct">۶۱٪</span>
-        </div>
-        <div class="progress-bar-row">
-          <span class="progress-label">در خطر</span>
-          <div class="progress-track"><div class="progress-fill" style="width:34%"></div></div>
-          <span class="progress-pct">۳۴٪</span>
+          <div class="metric-label">درآمد بازگشتی</div>
+          <div class="metric-value up">۸.۴M</div>
+          <div class="metric-change up">↑ از مشتریان قدیمی</div>
         </div>
       </div>
     </div>
@@ -696,228 +821,304 @@
 
 <!-- MARQUEE -->
 <div class="marquee-section">
-  <div class="marquee-track" id="marquee">
+  <div class="marquee-track">
     <div class="marquee-item"><div class="marquee-dot"></div> آنلاین‌شاپ‌های اینستاگرامی</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> فروشگاه‌های استوک موبایل</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> پوشاک و اکسسوری</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> فروشگاه‌های پوشاک</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> لوازم آرایشی</div>
     <div class="marquee-item"><div class="marquee-dot"></div> فروشگاه‌های محلی</div>
     <div class="marquee-item"><div class="marquee-dot"></div> واتساپ بیزینس</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> مدیریت مشتری</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> بازاریابی هوشمند</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> وفادارسازی مشتری</div>
-    <!-- Duplicate for seamless loop -->
+    <div class="marquee-item"><div class="marquee-dot"></div> اکسسوری و دیجیتال</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> غذا و نوشیدنی</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> هنر و صنایع‌دستی</div>
     <div class="marquee-item"><div class="marquee-dot"></div> آنلاین‌شاپ‌های اینستاگرامی</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> فروشگاه‌های استوک موبایل</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> پوشاک و اکسسوری</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> فروشگاه‌های پوشاک</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> لوازم آرایشی</div>
     <div class="marquee-item"><div class="marquee-dot"></div> فروشگاه‌های محلی</div>
     <div class="marquee-item"><div class="marquee-dot"></div> واتساپ بیزینس</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> مدیریت مشتری</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> بازاریابی هوشمند</div>
-    <div class="marquee-item"><div class="marquee-dot"></div> وفادارسازی مشتری</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> اکسسوری و دیجیتال</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> غذا و نوشیدنی</div>
+    <div class="marquee-item"><div class="marquee-dot"></div> هنر و صنایع‌دستی</div>
   </div>
 </div>
 
 <!-- PROBLEM -->
-<section class="section reveal" id="problem">
-  <div class="section-tag">مشکل اصلی</div>
-  <h2>چرا مشتری‌هایت برنمی‌گردند؟</h2>
-  <p class="section-sub">
-    ۷۰٪ از مشتریانی که یک‌بار خرید کرده‌اند، دیگر برنمی‌گردند — نه به خاطر اینکه ناراضی‌اند، بلکه چون فراموش شده‌اند.
-  </p>
+<section id="problem">
+  <div class="problem-intro reveal">
+    <div class="section-label" style="color:var(--red);">مشکل واقعی</div>
+    <h2 class="problem-big">
+      از هر ۱۰ مشتری،<br>
+      <span class="red">۷ نفر دیگه برنمیگردن.</span>
+    </h2>
+    <p>
+      نه به خاطر اینکه ناراضی بودن — بلکه چون کسی پیگیرشون نشد.
+      یادشون رفت. و تو هم فرصت فروش دوم، سوم و چهارمت رو از دست دادی.
+      هر بار هم که می‌خوای مشتری جدید جذب کنی، باید از صفر هزینه کنی.
+    </p>
+  </div>
 
   <div class="pain-grid">
     <div class="pain-card reveal">
-      <div class="pain-icon">🗂️</div>
-      <h3>داده پراکنده</h3>
-      <p>اطلاعات مشتری‌ها بین دایرکت، واتساپ، اکسل و ذهنت پخش شده. هیچ‌وقت نمی‌دانی کجا دنبالشان بگردی.</p>
+      <div class="pain-num">مشکل ۰۱</div>
+      <h3>نمی‌دونی کدوم مشتری داره می‌ره</h3>
+      <p>تا وقتی بفهمی، رفته. هیچ علامت هشداری نداری که به موقع عمل کنی.</p>
     </div>
     <div class="pain-card reveal">
-      <div class="pain-icon">🔍</div>
-      <h3>کور هستی نسبت به مشتریان</h3>
-      <p>نمی‌دانی کدام مشتری وفادار است، کدام در شرف رفتن است، و کدام یکی VIP واقعی توست.</p>
+      <div class="pain-num">مشکل ۰۲</div>
+      <h3>اطلاعات مشتری‌ها هر جا هست، اینجا نیست</h3>
+      <p>بین دایرکت، واتساپ، اکسل و ذهنت پخش شده. هیچ‌وقت تصویر کاملی نداری.</p>
     </div>
     <div class="pain-card reveal">
-      <div class="pain-icon">⏰</div>
-      <h3>پیگیری نداری</h3>
-      <p>بعد از خرید اول، هیچ سیستمی برای یادآوری و بازگشت مشتری نداری. وقتی هم یادت می‌افتد، دیگر دیر شده.</p>
+      <div class="pain-num">مشکل ۰۳</div>
+      <h3>نمی‌دونی کِی پیام بدی</h3>
+      <p>خیلی زود پیام می‌دی — آزاردهنده می‌شه. خیلی دیر — رفته. هیچ سیستمی نداری.</p>
     </div>
     <div class="pain-card reveal">
-      <div class="pain-icon">✍️</div>
-      <h3>وقت برای محتوا نداری</h3>
-      <p>تولید پیام شخصی برای هر مشتری خسته‌کننده است. چیزهای عمومی هم تأثیر ندارند.</p>
+      <div class="pain-num">مشکل ۰۴</div>
+      <h3>پیام عمومی جواب نمی‌ده</h3>
+      <p>«سلام عزیز، تخفیف داریم» رو همه می‌فرستن. رو به رو شدن با این پیام‌ها دیگه تأثیری ندارد.</p>
     </div>
     <div class="pain-card reveal">
-      <div class="pain-icon">💸</div>
-      <h3>هزینه جذب بالا می‌رود</h3>
-      <p>هر چقدر بیشتر تبلیغ می‌دهی، گران‌تر می‌شود. در حالی که مشتری قدیمی ارزان‌ترین فروش ممکن است.</p>
+      <div class="pain-num">مشکل ۰۵</div>
+      <h3>مشتری جدید جذب کردن گران‌تر می‌شه</h3>
+      <p>هزینه تبلیغات هر سال بالاتر می‌ره. در حالی که مشتری قدیمی ارزان‌ترین فروش ممکن هست.</p>
     </div>
     <div class="pain-card reveal">
-      <div class="pain-icon">🧩</div>
-      <h3>ابزارها پیچیده یا عمومی هستند</h3>
-      <p>CRMهای موجود برای شرکت‌های بزرگ ساخته شده‌اند. تو به چیزی ساده، فارسی و متناسب با کسب‌وکار خودت نیاز داری.</p>
+      <div class="pain-num">مشکل ۰۶</div>
+      <h3>CRM‌های موجود برای تو ساخته نشده‌</h3>
+      <p>پیچیده، گران، انگلیسی. تو به یک ابزار ساده فارسی نیاز داری — نه یک نرم‌افزار شرکت بزرگ.</p>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section reveal" id="how" style="background:var(--bg2);">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-tag" style="color:var(--teal);">چطور کار می‌کند</div>
-    <h2>از اولین ورود تا اولین فروش تکراری</h2>
-    <div class="sep"></div>
+<section id="how">
+  <div class="reveal" style="max-width:760px;">
+    <div class="section-label" style="color:var(--teal);">چطور کار می‌کنه</div>
+    <h2 class="section-h2">سه قدم تا مشتری‌های برگشتی بیشتر</h2>
+    <p class="section-sub">نه هوش مصنوعی پیچیده، نه آموزش طولانی — فقط یک سیستم ساده که کارش رو می‌کنه.</p>
+  </div>
 
-    <div class="steps-wrap">
-      <div class="step reveal">
-        <div class="step-num">۱</div>
-        <div class="step-content">
-          <h3>برند خود را تعریف کن</h3>
-          <p>لحن، محصولات، و مخاطبین برندت را یک‌بار به Growth OS بگو. سیستم یاد می‌گیرد و همه پیام‌ها را متناسب با صدای برند تو می‌نویسد.</p>
-        </div>
+  <div class="steps-container">
+    <div class="step reveal">
+      <div class="step-circle">۱</div>
+      <div class="step-content">
+        <h3>مشتریانت رو وارد کن</h3>
+        <p>
+          یک فایل Excel یا CSV آپلود کن — یا دستی اضافه کن. نام، شماره، تاریخ و مبلغ خرید.
+          کمتر از ۵ دقیقه طول می‌کشه.
+        </p>
+        <div class="step-result">✓ در ۵ دقیقه کامل می‌شود</div>
       </div>
-      <div class="step reveal">
-        <div class="step-num">۲</div>
-        <div class="step-content">
-          <h3>مشتریان را وارد کن</h3>
-          <p>یک فایل اکسل یا CSV آپلود کن — یا دستی اضافه کن. نام، شماره، تاریخ خرید و مبلغ. همین کافی است.</p>
-        </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-circle">۲</div>
+      <div class="step-content">
+        <h3>Growth OS مشتریانت رو دسته‌بندی می‌کنه</h3>
+        <p>
+          سیستم خودکار تشخیص می‌دهه کدوم مشتری VIP است، کدام وفادار، کدام تازه خریده،
+          و کدام در خطر ریزش است — بر اساس رفتار واقعی، نه حدس.
+        </p>
+        <div class="step-result">✓ هوشمند، خودکار، بدون دخالت تو</div>
       </div>
-      <div class="step reveal">
-        <div class="step-num">۳</div>
-        <div class="step-content">
-          <h3>تحلیل خودکار انجام می‌شود</h3>
-          <p>Growth OS مشتریانت را به صورت خودکار دسته‌بندی می‌کند: VIP، وفادار، در خطر ریزش، و جدید. بر اساس رفتار واقعی، نه حدس.</p>
-        </div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">۴</div>
-        <div class="step-content">
-          <h3>پیشنهاد اقدام می‌گیری</h3>
-          <p>سیستم می‌گوید «امروز برای ۷ مشتری در خطر ریزش پیام بفرست» و متن آماده هم می‌دهد — فقط کپی و ارسال.</p>
-        </div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">۵</div>
-        <div class="step-content">
-          <h3>خرید مجدد افزایش پیدا می‌کند</h3>
-          <p>داشبورد به تو نشان می‌دهد چه تعداد مشتری برگشتند. نرخ خرید مجدد را ماه به ماه دنبال می‌کنی.</p>
-        </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-circle">۳</div>
+      <div class="step-content">
+        <h3>می‌دونی امروز باید چه کاری کنی</h3>
+        <p>
+          هر روز صبح می‌بینی: «به ۵ مشتری در خطر پیام بفرست.» متن آماده هم هست.
+          کپی کن، ارسال کن. مشتری برمی‌گرده.
+        </p>
+        <div class="step-result">✓ هر روز ۱۵ دقیقه کافی است</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="section reveal" id="features">
-  <div class="section-tag" style="color:var(--purple);">قابلیت‌ها</div>
-  <h2>چهار ماژول، یک هدف</h2>
-  <p class="section-sub">همه چیز طراحی شده برای یک نتیجه: مشتری‌ها برگردند و دوباره بخرند.</p>
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--purple);">نتایج واقعی</div>
+    <h2 class="section-h2">نه قابلیت — نتیجه</h2>
+    <p class="section-sub">اینجا ویژگی فنی نمی‌فروشیم. می‌گوییم چه تغییری در کسب‌وکار تو اتفاق می‌افته.</p>
+  </div>
 
-  <div class="features-grid">
-    <div class="feat-card reveal">
-      <div class="feat-icon" style="background:#00C8A015;">👥</div>
-      <h3>مدیریت مشتری</h3>
-      <p>همه اطلاعات مشتری در یک جا: تاریخچه خرید، یادداشت‌ها، کانال ارتباطی، و وضعیت فعلی. دیگر هیچ مشتری‌ای فراموش نمی‌شود.</p>
+  <div class="benefits-grid">
+    <div class="benefit-card reveal">
+      <div class="benefit-icon" style="background:#00D4A812;">👁️</div>
+      <h3>می‌بینی کدوم مشتری داره میره</h3>
+      <div class="result">قبل از اینکه بره</div>
+      <p>دیگه غافل‌گیر نمی‌شی. Growth OS هر مشتری رو رصد می‌کنه و وقتی سیگنال ریزش می‌بیند، به شما خبر می‌ده.</p>
     </div>
-    <div class="feat-card reveal">
-      <div class="feat-icon" style="background:#7C5CFC15;">🧠</div>
-      <h3>دسته‌بندی هوشمند AI</h3>
-      <p>بر اساس تعداد خرید، مبلغ، و فاصله زمانی، هر مشتری به صورت خودکار دسته‌بندی می‌شود. VIP، وفادار، در خطر، جدید.</p>
+    <div class="benefit-card reveal">
+      <div class="benefit-icon" style="background:#8B5CF612;">🧠</div>
+      <h3>هر روز میدونی چه کاری بکنی</h3>
+      <div class="result">بدون سردرگمی</div>
+      <p>به جای اینکه هر روز فکر کنی «باید چی کار کنم؟»، سیستم میگه کدوم مشتری منتظر هست و چه پیامی بفرستی.</p>
     </div>
-    <div class="feat-card reveal">
-      <div class="feat-icon" style="background:#F5C84215;">⚡</div>
-      <h3>پیشنهاد اقدام رشد</h3>
-      <p>هر روز می‌دانی باید چه کاری انجام دهی: کدام مشتری را پیگیری کنی، چه تخفیفی بدهی، و کی پیام بفرستی.</p>
+    <div class="benefit-card reveal">
+      <div class="benefit-icon" style="background:#F5C84212;">✍️</div>
+      <h3>پیام‌های شخصی، بدون وقت گذاشتن</h3>
+      <div class="result">هر پیام متناسب با آن مشتری</div>
+      <p>سیستم پیام آماده تولید می‌کند — متناسب با تاریخچه خرید، وضعیت و لحن برند تو. فقط ارسال کن.</p>
     </div>
-    <div class="feat-card reveal">
-      <div class="feat-icon" style="background:#FC5C5C15;">✍️</div>
-      <h3>تولید پیام با AI</h3>
-      <p>متن واتساپ، پیامک، دایرکت، و کپشن اینستاگرام — همه متناسب با لحن برند تو و وضعیت خاص هر مشتری تولید می‌شود.</p>
+    <div class="benefit-card reveal">
+      <div class="benefit-icon" style="background:#FF4D6D12;">📈</div>
+      <h3>درآمد از مشتری‌های قدیمی بالا میره</h3>
+      <div class="result">بدون هزینه تبلیغات اضافه</div>
+      <p>جذب مشتری جدید ۵ برابر گران‌تر از نگه‌داشتن قدیمی هست. Growth OS این معادله را برعکس می‌کنه.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section id="proof">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--gold);">نظرات کاربرانی که نسخه اولیه رو استفاده کردن!</div>
+    <h2 class="section-h2">آن‌ها امتحان کردند</h2>
+    <p class="section-sub">اینها صاحبان فروشگاه‌هایی هستند که دقیقاً مثل تو فکر می‌کردند «آیا واقعاً کار میکنه؟</p>
+  </div>
+
+  <div class="proof-grid">
+    <div class="proof-card reveal">
+      <div class="proof-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="proof-text">
+        ماه اول ۱۸ مشتری برگشتند که ۴ ماه بود ازشون خبری نداشتم. فقط با یک پیام ساده.
+        حالا نمیتونم بدون Growth OS کار کنم.
+      </p>
+      <div class="proof-author">
+        <div class="proof-avatar" style="background:#00D4A815; color:var(--teal);">م.ر</div>
+        <div>
+          <div class="proof-name">مریم رضایی</div>
+          <div class="proof-role">فروشگاه پوشاک اینستاگرامی</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-card reveal">
+      <div class="proof-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="proof-text">
+        قبلاً همه چیز توی ذهنم بود و هر روز استرس داشتم. حالا صبح میام، می‌بینم چیکار کنم،
+        ۱۵ دقیقه وقت می‌ذارم و تموم.
+      </p>
+      <div class="proof-author">
+        <div class="proof-avatar" style="background:#8B5CF615; color:var(--purple);">ع.ک</div>
+        <div>
+          <div class="proof-name">علی کاظمی</div>
+          <div class="proof-role">فروشگاه لوازم آرایشی</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-card reveal">
+      <div class="proof-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="proof-text">
+        نرخ خرید مجدد ما از ۱۴٪ رفت به ۳۱٪ در سه ماه. این یعنی کمتر از نصف هزینه جذب مشتری جدید.
+      </p>
+      <div class="proof-author">
+        <div class="proof-avatar" style="background:#F5C84215; color:var(--gold);">س.ح</div>
+        <div>
+          <div class="proof-name">سمیرا حسینی</div>
+          <div class="proof-role">آنلاین‌شاپ اکسسوری</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="section reveal" id="pricing" style="background:var(--bg2);">
-  <div style="text-align:center;">
-    <div class="section-tag" style="justify-content:center;">قیمت‌گذاری</div>
-    <h2>شروع رایگان، رشد واقعی</h2>
-    <p class="section-sub" style="margin:0 auto 0;">۱۴ روز رایگان، بدون نیاز به کارت بانکی. بعد از اینکه نتیجه دیدی، تصمیم بگیر.</p>
+<section id="pricing">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-label" style="color:var(--teal); justify-content:center;">قیمت‌گذاری</div>
+    <h2 class="section-h2">ببین — نتیجه بگیر — بعد تصمیم بگیر</h2>
+    <p class="section-sub" style="margin:0 auto 56px;">۱۴ روز رایگان، بدون کارت بانکی. اگر نتیجه نگرفتی، یک ریال نمی‌گیریم.</p>
   </div>
 
   <div class="pricing-grid">
     <div class="price-card reveal">
       <div class="price-plan">Starter</div>
-      <div class="price-amount">۳۹۹<span> هزار تومان/ماه</span></div>
-      <div class="price-desc">برای فروشگاه‌های کوچک که تازه شروع می‌کنند</div>
+      <div class="price-amount">۳۹۹<sub> هزار تومان/ماه</sub></div>
+      <div class="price-desc">برای فروشگاه‌هایی که تازه شروع به سیستم‌سازی می‌کنند</div>
       <ul class="price-features">
         <li>تا ۵۰۰ مشتری</li>
-        <li>دسته‌بندی هوشمند</li>
-        <li>۵۰ پیام AI در ماه</li>
-        <li>داشبورد پایه</li>
+        <li>دسته‌بندی هوشمند مشتریان</li>
+        <li>۵۰ پیام آماده در ماه</li>
+        <li>هشدار ریزش مشتری</li>
       </ul>
-      <button class="price-btn price-btn-outline">شروع رایگان</button>
+      <button class="price-btn price-btn-outline">۱۴ روز رایگان شروع کن</button>
     </div>
 
     <div class="price-card featured reveal">
-      <div class="price-badge">محبوب‌ترین</div>
+      <div class="price-badge">بیشترین انتخاب</div>
       <div class="price-plan">Growth</div>
-      <div class="price-amount">۹۹۹<span> هزار تومان/ماه</span></div>
-      <div class="price-desc">برای آنلاین‌شاپ‌های فعال که می‌خواهند رشد کنند</div>
+      <div class="price-amount">۹۹۹<sub> هزار تومان/ماه</sub></div>
+      <div class="price-desc">برای آنلاین‌شاپ‌های فعال که می‌خواهند رشد قابل اندازه‌گیری داشته باشند</div>
       <ul class="price-features">
         <li>تا ۲۰۰۰ مشتری</li>
-        <li>دسته‌بندی پیشرفته</li>
-        <li>۲۰۰ پیام AI در ماه</li>
-        <li>پیشنهادهای اقدام روزانه</li>
-        <li>گزارش‌های ماهانه</li>
+        <li>پیشنهاد اقدام روزانه</li>
+        <li>۲۰۰ پیام آماده در ماه</li>
+        <li>گزارش خرید مجدد ماهانه</li>
+        <li>پشتیبانی اولویت‌دار</li>
       </ul>
-      <button class="price-btn price-btn-solid">شروع رایگان →</button>
+      <button class="price-btn price-btn-solid">۱۴ روز رایگان — همین حالا →</button>
     </div>
 
     <div class="price-card reveal">
       <div class="price-plan">Pro</div>
-      <div class="price-amount">۱.۹۹۹<span> هزار تومان/ماه</span></div>
-      <div class="price-desc">برای کسب‌وکارهایی که در حال مقیاس‌پذیری هستند</div>
+      <div class="price-amount">۱.۹۹۹<sub> هزار تومان/ماه</sub></div>
+      <div class="price-desc">برای کسب‌وکارهایی که رشد کرده‌اند و می‌خواهند مقیاس بزنند</div>
       <ul class="price-features">
         <li>مشتری نامحدود</li>
+        <li>پیام آماده نامحدود</li>
+        <li>اتصال مستقیم پیامک و واتساپ</li>
         <li>تمام قابلیت‌های Growth</li>
-        <li>پیام AI نامحدود</li>
-        <li>اتصال پیامک و واتساپ</li>
-        <li>پشتیبانی اولویت‌دار</li>
+        <li>پشتیبانی اختصاصی ۲۴/۷</li>
       </ul>
-      <button class="price-btn price-btn-outline">تماس با ما</button>
+      <button class="price-btn price-btn-outline">با ما صحبت کن</button>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <div class="cta-section reveal">
-  <h2>یک فروشگاه بهتر با مشتری‌های وفادارتر</h2>
-  <p>همین امروز شروع کن. ۱۴ روز وقت داری که نتیجه را با چشم خودت ببینی.</p>
+  <div class="cta-glow"></div>
+  <h2>مشتریانت منتظرند.<br>فقط یادشون رفته برگردن.</h2>
+  <p>۱۴ روز وقت داری که با چشم خودت ببینی چند مشتری برمی‌گردند. بدون ریسک، بدون هزینه.</p>
   <div class="cta-btns">
-    <button class="btn-primary" style="font-size:1rem; padding:16px 36px;">شروع رایگان ۱۴ روزه →</button>
-    <button class="btn-ghost" style="font-size:1rem; padding:16px 28px;">دمو بگیر</button>
+    <button class="btn-primary" style="font-size:1rem; padding:17px 38px;" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
+      رایگان شروع کن — ۱۴ روز
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <button class="btn-ghost" style="font-size:1rem; padding:17px 28px;">مشاهده دمو</button>
   </div>
+  <p class="cta-note"> ایمن · هوشمند · سریع</p>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div style="display:flex; align-items:center; gap:10px;">
-    <a href="https://www.linkedin.com/in/ariansj" target="_blank" rel="noopener noreferrer"
-       style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); transition:opacity 0.2s;"
-       onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">
-      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="#0A66C2">
-        <rect width="24" height="24" rx="4" fill="#0A66C2"/>
-        <path d="M7.75 9.5H5.25V18H7.75V9.5ZM6.5 8.5C7.33 8.5 8 7.83 8 7C8 6.17 7.33 5.5 6.5 5.5C5.67 5.5 5 6.17 5 7C5 7.83 5.67 8.5 6.5 8.5ZM19 18H16.5V13.75C16.5 12.09 15.84 11.5 14.91 11.5C13.92 11.5 13.25 12.26 13.25 13.75V18H10.75V9.5H13.15V10.6C13.53 9.91 14.46 9.25 15.85 9.25C17.8 9.25 19 10.5 19 12.9V18Z" fill="white"/>
-      </svg>
-      <span style="font-weight:700;">ariansj</span>
-    </a>
-  </div>
-  <span>سیستم عامل رشد کسب‌وکارهای کوچک ایرانی</span>
-  <span>© ۱۴۰۴</span>
+  <a href="https://www.linkedin.com/in/ariansj" target="_blank" rel="noopener noreferrer"
+     style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--muted); transition:color 0.2s;"
+     onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#0A66C2">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path d="M7.75 9.5H5.25V18H7.75V9.5ZM6.5 8.5C7.33 8.5 8 7.83 8 7C8 6.17 7.33 5.5 6.5 5.5C5.67 5.5 5 6.17 5 7C5 7.83 5.67 8.5 6.5 8.5ZM19 18H16.5V13.75C16.5 12.09 15.84 11.5 14.91 11.5C13.92 11.5 13.25 12.26 13.25 13.75V18H10.75V9.5H13.15V10.6C13.53 9.91 14.46 9.25 15.85 9.25C17.8 9.25 19 10.5 19 12.9V18Z" fill="white"/>
+    </svg>
+    <span style="font-weight:600;">Arian Seyedi</span>
+  </a>
+  <span>سیستم بازگشت مشتری برای کسب‌وکارهای ایرانی</span>
+  <span>© ۱۴۰۴ Growth OS</span>
 </footer>
 
 <script>
-  // ─── MINIMAL ANIMATED BACKGROUND ───
+  // BG CANVAS
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
 
@@ -928,98 +1129,59 @@
   resize();
   window.addEventListener('resize', resize);
 
-  const DOTS = 38;
+  const DOTS = 42;
   const dots = Array.from({ length: DOTS }, () => ({
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
-    r: Math.random() * 1.4 + 0.4,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    color: Math.random() > 0.5 ? '0,200,160' : '124,92,252'
+    r: Math.random() * 1.6 + 0.4,
+    vx: (Math.random() - 0.5) * 0.28,
+    vy: (Math.random() - 0.5) * 0.28,
+    color: Math.random() > 0.5 ? '0,212,168' : '139,92,246'
   }));
 
   function drawBg() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     for (let i = 0; i < dots.length; i++) {
       for (let j = i + 1; j < dots.length; j++) {
         const dx = dots[i].x - dots[j].x;
         const dy = dots[i].y - dots[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 160) {
+        if (dist < 155) {
           ctx.beginPath();
           ctx.moveTo(dots[i].x, dots[i].y);
           ctx.lineTo(dots[j].x, dots[j].y);
-          ctx.strokeStyle = `rgba(255,255,255,${0.04 * (1 - dist / 160)})`;
-          ctx.lineWidth = 0.6;
+          ctx.strokeStyle = `rgba(255,255,255,${0.035 * (1 - dist / 155)})`;
+          ctx.lineWidth = 0.5;
           ctx.stroke();
         }
       }
     }
-
     dots.forEach(d => {
       ctx.beginPath();
       ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${d.color},0.45)`;
+      ctx.fillStyle = `rgba(${d.color},0.4)`;
       ctx.fill();
-
       d.x += d.vx;
       d.y += d.vy;
       if (d.x < 0 || d.x > canvas.width) d.vx *= -1;
       if (d.y < 0 || d.y > canvas.height) d.vy *= -1;
     });
-
     requestAnimationFrame(drawBg);
   }
   drawBg();
 
-  // Scroll reveal
+  // SCROLL REVEAL
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        setTimeout(() => e.target.classList.add('visible'), i * 75);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
 
-  // Live dashboard animation — cycle customer badges
-  const badges = [
-    { cls: 'badge-vip', txt: 'VIP' },
-    { cls: 'badge-loyal', txt: 'وفادار' },
-    { cls: 'badge-at-risk', txt: 'در خطر' },
-    { cls: 'badge-new', txt: 'جدید' }
-  ];
-
-  // Animate metric value counting
-  function animateCount(el, target, suffix = '') {
-    let start = 0;
-    const duration = 1800;
-    const step = (timestamp) => {
-      if (!start) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(ease * target) + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-
-  const metricObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const val = e.target.dataset.val;
-        const suf = e.target.dataset.suf || '';
-        if (val) animateCount(e.target, parseInt(val), suf);
-        metricObs.unobserve(e.target);
-      }
-    });
-  });
-
-  document.querySelectorAll('[data-val]').forEach(el => metricObs.observe(el));
-
-  // Make hero visible immediately
+  // Hero immediately visible
   document.querySelector('.hero').classList.add('visible');
 </script>
 </body>
